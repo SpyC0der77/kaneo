@@ -50,7 +50,7 @@ function Layout({ children, className }: LayoutProps) {
   useUserPreferencesEffects();
 
   return (
-    <div className="flex h-svh w-full overflow-hidden bg-sidebar">
+    <div className="flex h-svh w-full overflow-hidden bg-background">
       <SidebarProvider
         defaultOpen={sidebarDefaultOpen}
         style={

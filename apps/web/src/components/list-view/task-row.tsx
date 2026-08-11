@@ -207,7 +207,7 @@ function TaskRow({ task, projectSlug }: TaskRowProps) {
               </div>
             )}
             {showTaskNumbers && (
-              <div className="text-xs font-mono text-muted-foreground flex-shrink-0">
+              <div className="w-[66px] shrink-0 truncate text-sm font-medium text-muted-foreground">
                 {projectSlug}-{task.number}
               </div>
             )}

@@ -163,7 +163,7 @@ export default function BacklogTaskRow({ task }: BacklogTaskRowProps) {
               </div>
             )}
             {showTaskNumbers && (
-              <div className="text-xs font-mono text-muted-foreground flex-shrink-0">
+              <div className="w-[66px] shrink-0 truncate text-sm font-medium text-muted-foreground">
                 {project?.slug}-{task.number}
               </div>
             )}

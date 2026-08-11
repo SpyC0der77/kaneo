@@ -206,43 +206,27 @@ function TaskCard({ task, disableDragDrop = false }: TaskCardProps) {
               }
             }}
           >
-            {showTaskNumbers && (
-              <div className="mb-2 text-xs font-medium text-muted-foreground">
-                {project?.slug}-{task.number}
-              </div>
-            )}
-
-            {showAssignees && (
-              <div className="absolute top-3 right-3">
-                {task.userId ? (
-                  <Avatar className="h-5 w-5">
-                    <AvatarImage
-                      src={assignee?.user?.image ?? ""}
-                      alt={assignee?.user?.name || ""}
-                    />
-                    <AvatarFallback className="text-xs font-medium border border-border/30">
-                      {getInitials(assignee?.user?.name)}
-                    </AvatarFallback>
-                  </Avatar>
-                ) : (
-                  <div
-                    className="flex h-5 w-5 items-center justify-center rounded-full border border-border bg-muted"
-                    title={t("tasks:assignee.unassigned")}
-                  >
-                    <span className="text-[10px] font-medium text-muted-foreground">
-                      ?
-                    </span>
-                  </div>
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <div className="flex min-w-0 items-center gap-1.5">
+                {showPriority && (
+                  <span className="inline-flex shrink-0 items-center text-muted-foreground first:[&_svg]:h-4 first:[&_svg]:w-4">
+                    {getPriorityIcon(task.priority ?? "")}
+                  </span>
+                )}
+                {showTaskNumbers && (
+                  <span className="truncate text-xs font-medium text-muted-foreground">
+                    {project?.slug}-{task.number}
+                  </span>
                 )}
               </div>
-            )}
+            </div>
 
-            <div className="mb-2.5 pr-6">
+            <div className="mb-3">
               <div
                 className="overflow-hidden break-words text-sm font-semibold leading-5 text-foreground"
                 style={{
                   display: "-webkit-box",
-                  WebkitLineClamp: 3,
+                  WebkitLineClamp: 2,
                   WebkitBoxOrient: "vertical",
                   wordBreak: "break-word",
                   hyphens: "auto",
@@ -253,142 +237,162 @@ function TaskCard({ task, disableDragDrop = false }: TaskCardProps) {
             </div>
 
             {showLabels && (
-              <div className="mb-2.5">
+              <div className="mb-3 min-h-6">
                 <TaskLabels labels={task.labels ?? []} />
               </div>
             )}
 
-            <div className="flex items-center gap-1.5">
-              {showPriority && (
-                <span className="inline-flex items-center gap-1 rounded border border-border/70 bg-muted/55 px-2 py-1 text-[10px] font-medium text-muted-foreground">
-                  {getPriorityIcon(task.priority ?? "")}
-                </span>
-              )}
-
-              {showDueDates && task.dueDate && (
-                <div
-                  className={`flex items-center gap-1 text-[10px] px-2 py-1 rounded ${dueDateStatusColors[getDueDateStatus(task.dueDate, taskIsCompleted)]}`}
-                >
-                  {getDueDateStatus(task.dueDate, taskIsCompleted) ===
-                    "overdue" && <CalendarX className="w-3 h-3" />}
-                  {getDueDateStatus(task.dueDate, taskIsCompleted) ===
-                    "due-soon" && <CalendarClock className="w-3 h-3" />}
-                  {(getDueDateStatus(task.dueDate, taskIsCompleted) ===
-                    "far-future" ||
-                    getDueDateStatus(task.dueDate, taskIsCompleted) ===
-                      "no-due-date") && <Calendar className="w-3 h-3" />}
-                  <span>{format(new Date(task.dueDate), "MMM d")}</span>
-                </div>
-              )}
-
-              {pullRequests.length === 1 && (
-                <HoverCard openDelay={200} closeDelay={100}>
-                  <HoverCardTrigger asChild>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(pullRequests[0].url, "_blank");
-                      }}
-                      className="inline-flex items-center gap-1.5 rounded border border-border/70 bg-muted/55 px-2 py-1 text-[10px] font-medium text-muted-foreground"
-                    >
-                      {getPRInfo(pullRequests[0]).icon}
-                      <span>#{pullRequests[0].externalId}</span>
-                    </button>
-                  </HoverCardTrigger>
-                  <HoverCardContent
-                    className="w-72 p-3"
-                    side="bottom"
-                    onClick={(e) => e.stopPropagation()}
-                    onPointerDown={(e) => e.stopPropagation()}
+            <div className="mt-auto flex items-center justify-between gap-1.5 pt-1">
+              <div className="flex min-w-0 items-center gap-1.5">
+                {showDueDates && task.dueDate && (
+                  <div
+                    className={`flex items-center gap-1 text-[10px] px-2 py-1 rounded ${dueDateStatusColors[getDueDateStatus(task.dueDate, taskIsCompleted)]}`}
                   >
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        {getPRInfo(pullRequests[0]).icon}
-                        <span>{getPRInfo(pullRequests[0]).status}</span>
-                        <span className="text-muted-foreground/50">•</span>
-                        <span>#{pullRequests[0].externalId}</span>
-                      </div>
-                      <p className="text-sm font-medium leading-snug">
-                        {pullRequests[0].title || t("tasks:pr.label")}
-                      </p>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
-              )}
+                    {getDueDateStatus(task.dueDate, taskIsCompleted) ===
+                      "overdue" && <CalendarX className="w-3 h-3" />}
+                    {getDueDateStatus(task.dueDate, taskIsCompleted) ===
+                      "due-soon" && <CalendarClock className="w-3 h-3" />}
+                    {(getDueDateStatus(task.dueDate, taskIsCompleted) ===
+                      "far-future" ||
+                      getDueDateStatus(task.dueDate, taskIsCompleted) ===
+                        "no-due-date") && <Calendar className="w-3 h-3" />}
+                    <span>{format(new Date(task.dueDate), "MMM d")}</span>
+                  </div>
+                )}
 
-              {pullRequests.length > 1 &&
-                (() => {
-                  const hasOpen = pullRequests.some(
-                    (pr) => !pr.metadata?.merged && !pr.metadata?.draft,
-                  );
-                  const allMerged = pullRequests.every(
-                    (pr) => pr.metadata?.merged,
-                  );
-                  const iconColor = allMerged
-                    ? "text-info-foreground"
-                    : hasOpen
-                      ? "text-success-foreground"
-                      : "text-muted-foreground";
-
-                  return (
-                    <HoverCard openDelay={200} closeDelay={100}>
-                      <HoverCardTrigger asChild>
-                        <button
-                          type="button"
-                          onClick={(e) => e.stopPropagation()}
-                          className="inline-flex items-center gap-1.5 rounded border border-border/70 bg-muted/55 px-2 py-1 text-[10px] font-medium text-muted-foreground"
-                        >
-                          <GitPullRequest className={`h-3 w-3 ${iconColor}`} />
-                          <span>
-                            {t("tasks:pr.count", {
-                              count: pullRequests.length,
-                            })}
-                          </span>
-                        </button>
-                      </HoverCardTrigger>
-                      <HoverCardContent
-                        className="w-auto min-w-56 max-w-96 p-1"
-                        side="bottom"
-                        onClick={(e) => e.stopPropagation()}
-                        onPointerDown={(e) => e.stopPropagation()}
+                {pullRequests.length === 1 && (
+                  <HoverCard openDelay={200} closeDelay={100}>
+                    <HoverCardTrigger asChild>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(pullRequests[0].url, "_blank");
+                        }}
+                        className="inline-flex items-center gap-1.5 rounded border border-border/70 bg-muted/55 px-2 py-1 text-[10px] font-medium text-muted-foreground"
                       >
-                        {pullRequests.map((pr, index) => {
-                          const prInfo = getPRInfo(pr);
-                          const repoMatch = pr.url.match(
-                            /github\.com\/([^/]+\/[^/]+)\/pull/,
-                          );
-                          const repoName = repoMatch ? repoMatch[1] : null;
-                          return (
-                            <div key={pr.id}>
-                              {index > 0 && (
-                                <hr className="border-border my-1" />
-                              )}
-                              <button
-                                type="button"
-                                onClick={() => window.open(pr.url, "_blank")}
-                                className="w-full px-2 py-1.5 text-left hover:bg-muted/50 rounded transition-colors"
-                              >
-                                <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                                  {prInfo.icon}
-                                  <span>
-                                    {repoName}#{pr.externalId}
+                        {getPRInfo(pullRequests[0]).icon}
+                        <span>#{pullRequests[0].externalId}</span>
+                      </button>
+                    </HoverCardTrigger>
+                    <HoverCardContent
+                      className="w-72 p-3"
+                      side="bottom"
+                      onClick={(e) => e.stopPropagation()}
+                      onPointerDown={(e) => e.stopPropagation()}
+                    >
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          {getPRInfo(pullRequests[0]).icon}
+                          <span>{getPRInfo(pullRequests[0]).status}</span>
+                          <span className="text-muted-foreground/50">•</span>
+                          <span>#{pullRequests[0].externalId}</span>
+                        </div>
+                        <p className="text-sm font-medium leading-snug">
+                          {pullRequests[0].title || t("tasks:pr.label")}
+                        </p>
+                      </div>
+                    </HoverCardContent>
+                  </HoverCard>
+                )}
+
+                {pullRequests.length > 1 &&
+                  (() => {
+                    const hasOpen = pullRequests.some(
+                      (pr) => !pr.metadata?.merged && !pr.metadata?.draft,
+                    );
+                    const allMerged = pullRequests.every(
+                      (pr) => pr.metadata?.merged,
+                    );
+                    const iconColor = allMerged
+                      ? "text-info-foreground"
+                      : hasOpen
+                        ? "text-success-foreground"
+                        : "text-muted-foreground";
+
+                    return (
+                      <HoverCard openDelay={200} closeDelay={100}>
+                        <HoverCardTrigger asChild>
+                          <button
+                            type="button"
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-flex items-center gap-1.5 rounded border border-border/70 bg-muted/55 px-2 py-1 text-[10px] font-medium text-muted-foreground"
+                          >
+                            <GitPullRequest
+                              className={`h-3 w-3 ${iconColor}`}
+                            />
+                            <span>
+                              {t("tasks:pr.count", {
+                                count: pullRequests.length,
+                              })}
+                            </span>
+                          </button>
+                        </HoverCardTrigger>
+                        <HoverCardContent
+                          className="w-auto min-w-56 max-w-96 p-1"
+                          side="bottom"
+                          onClick={(e) => e.stopPropagation()}
+                          onPointerDown={(e) => e.stopPropagation()}
+                        >
+                          {pullRequests.map((pr, index) => {
+                            const prInfo = getPRInfo(pr);
+                            const repoMatch = pr.url.match(
+                              /github\.com\/([^/]+\/[^/]+)\/pull/,
+                            );
+                            const repoName = repoMatch ? repoMatch[1] : null;
+                            return (
+                              <div key={pr.id}>
+                                {index > 0 && (
+                                  <hr className="border-border my-1" />
+                                )}
+                                <button
+                                  type="button"
+                                  onClick={() => window.open(pr.url, "_blank")}
+                                  className="w-full px-2 py-1.5 text-left hover:bg-muted/50 rounded transition-colors"
+                                >
+                                  <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                                    {prInfo.icon}
+                                    <span>
+                                      {repoName}#{pr.externalId}
+                                    </span>
+                                  </div>
+                                  <p className="text-xs leading-tight line-clamp-2 mt-0.5">
+                                    {pr.title || t("tasks:pr.label")}
+                                  </p>
+                                  <span className="text-[10px] text-muted-foreground">
+                                    {prInfo.status}
                                   </span>
-                                </div>
-                                <p className="text-xs leading-tight line-clamp-2 mt-0.5">
-                                  {pr.title || t("tasks:pr.label")}
-                                </p>
-                                <span className="text-[10px] text-muted-foreground">
-                                  {prInfo.status}
-                                </span>
-                              </button>
-                            </div>
-                          );
-                        })}
-                      </HoverCardContent>
-                    </HoverCard>
-                  );
-                })()}
+                                </button>
+                              </div>
+                            );
+                          })}
+                        </HoverCardContent>
+                      </HoverCard>
+                    );
+                  })()}
+              </div>
+
+              {showAssignees &&
+                (task.userId ? (
+                  <Avatar className="h-5 w-5 shrink-0">
+                    <AvatarImage
+                      src={assignee?.user?.image ?? ""}
+                      alt={assignee?.user?.name || ""}
+                    />
+                    <AvatarFallback className="border border-border/30 text-xs font-medium">
+                      {getInitials(assignee?.user?.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                ) : (
+                  <div
+                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-border bg-muted"
+                    title={t("tasks:assignee.unassigned")}
+                  >
+                    <span className="text-[10px] font-medium text-muted-foreground">
+                      ?
+                    </span>
+                  </div>
+                ))}
             </div>
           </div>
         </ContextMenuTrigger>
