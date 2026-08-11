@@ -51,15 +51,15 @@ export function ColumnHeader({ column }: ColumnHeaderProps) {
   };
 
   return (
-    <div className="flex items-center justify-between gap-2">
+    <div className="flex h-full items-center justify-between gap-2">
       <div className="flex min-w-0 items-center gap-2">
         <span className="text-muted-foreground">
           {getColumnIcon(column.id, column.isFinal, column.icon)}
         </span>
-        <span className="truncate text-sm font-medium text-foreground/95">
+        <span className="truncate text-sm font-medium text-foreground">
           {column.name}
         </span>
-        <span className="rounded-md bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground">
+        <span className="text-sm text-muted-foreground">
           {column.tasks.length}
         </span>
       </div>

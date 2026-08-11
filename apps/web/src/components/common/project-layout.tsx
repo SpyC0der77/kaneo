@@ -141,13 +141,13 @@ export default function ProjectLayout({
             </div>
 
             {showViewSwitcher && (
-              <div className="hidden h-8 items-center gap-0.5 rounded-lg border border-border/80 bg-background p-0.5 sm:inline-flex">
+              <div className="hidden h-7 items-center gap-0.5 rounded-md border border-border bg-background p-0.5 sm:inline-flex">
                 <Button
                   variant={resolvedView === "backlog" ? "secondary" : "ghost"}
                   size="xs"
                   onClick={handleNavigateToBacklog}
                   className={cn(
-                    "h-6 gap-1.5 rounded-md px-2 text-xs",
+                    "h-6 gap-1.5 rounded-sm px-2 text-xs",
                     resolvedView !== "backlog" && "text-muted-foreground",
                   )}
                 >
@@ -159,7 +159,7 @@ export default function ProjectLayout({
                   size="xs"
                   onClick={handleNavigateToBoard}
                   className={cn(
-                    "h-6 gap-1.5 rounded-md px-2 text-xs",
+                    "h-6 gap-1.5 rounded-sm px-2 text-xs",
                     resolvedView !== "board" && "text-muted-foreground",
                   )}
                 >
@@ -171,7 +171,7 @@ export default function ProjectLayout({
                   size="xs"
                   onClick={handleNavigateToGantt}
                   className={cn(
-                    "h-6 gap-1.5 rounded-md px-2 text-xs",
+                    "h-6 gap-1.5 rounded-sm px-2 text-xs",
                     resolvedView !== "gantt" && "text-muted-foreground",
                   )}
                 >

@@ -185,16 +185,18 @@ function TaskCard({ task, disableDragDrop = false }: TaskCardProps) {
           {/** biome-ignore lint/a11y/noStaticElementInteractions: false positive for onClick and onKeyDown */}
           <div
             onClick={handleTaskCardClick}
-            className={`group relative rounded-lg border bg-background p-3 shadow-xs/5 transition-[background-color,border-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] ${
-              disableDragDrop ? "cursor-default" : "cursor-move"
+            className={`group relative rounded-md border border-border/50 bg-background p-3 shadow-xs transition-[background-color,border-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] ${
+              disableDragDrop
+                ? "cursor-default"
+                : "cursor-grab active:cursor-grabbing"
             } ${
               isDragging
-                ? "border-ring/40 bg-card shadow-lg"
-                : "hover:border-border/90 hover:bg-background hover:shadow-sm"
+                ? "border-border bg-background shadow-md opacity-50"
+                : "hover:border-border"
             } ${
               isTaskSelected
-                ? "border-ring/40 bg-accent/50 shadow-sm ring-1 ring-inset ring-ring/30"
-                : "border-border"
+                ? "border-ring/40 bg-accent/40 ring-1 ring-inset ring-ring/30"
+                : ""
             } ${isTaskFocused ? "ring-2 ring-inset ring-ring/50" : ""}`}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -205,7 +207,7 @@ function TaskCard({ task, disableDragDrop = false }: TaskCardProps) {
             }}
           >
             {showTaskNumbers && (
-              <div className="mb-2 text-[10px] font-mono text-muted-foreground/90">
+              <div className="mb-2 text-xs font-medium text-muted-foreground">
                 {project?.slug}-{task.number}
               </div>
             )}
@@ -237,7 +239,7 @@ function TaskCard({ task, disableDragDrop = false }: TaskCardProps) {
 
             <div className="mb-2.5 pr-6">
               <div
-                className="overflow-hidden break-words text-sm leading-5 font-medium text-foreground/95"
+                className="overflow-hidden break-words text-sm font-semibold leading-5 text-foreground"
                 style={{
                   display: "-webkit-box",
                   WebkitLineClamp: 3,

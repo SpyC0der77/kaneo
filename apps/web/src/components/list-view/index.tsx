@@ -298,11 +298,11 @@ function ListView({ project, disableDragDrop = false }: ListViewProps) {
           showDropIndicator && "border-l-4 border-l-ring bg-accent/35",
         )}
       >
-        <div className="flex items-center justify-between py-2 px-4 bg-muted/60 border-b border-border/50">
+        <div className="sticky top-0 z-10 flex h-10 items-center justify-between border-b border-border/50 bg-container px-6">
           <button
             type="button"
             onClick={() => toggleSection(column.id)}
-            className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-foreground transition-colors"
+            className="flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-foreground"
           >
             <ChevronRight
               className={cn(
@@ -401,7 +401,7 @@ function ListView({ project, disableDragDrop = false }: ListViewProps) {
       onDragEnd={handleDragEnd}
       modifiers={[snapCenterToCursor]}
     >
-      <div className="w-full h-full overflow-auto bg-muted/20">
+      <div className="h-full w-full overflow-auto bg-container">
         <div className="divide-y divide-border/50">
           {project.columns.map((column) => (
             <ColumnSection key={column.id} column={column} />
