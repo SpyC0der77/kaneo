@@ -184,17 +184,17 @@ function KanbanBoard({ project, disableDragDrop = false }: KanbanBoardProps) {
     setActiveId(null);
   };
 
-  if (!project || !project?.columns) {
+  if (!project?.columns) {
     return (
-      <div className="flex h-full w-full flex-col bg-linear-to-b from-muted/25 to-background">
-        <header className="mb-6 mt-6 space-y-6 shrink-0 px-6">
+      <div className="flex h-full w-full flex-col bg-container">
+        <header className="mb-6 mt-6 shrink-0 space-y-6 px-6">
           <div className="flex items-center justify-between">
-            <div className="w-48 h-8 bg-muted/50 rounded-md animate-pulse" />
+            <div className="h-8 w-48 animate-pulse rounded-md bg-muted/50" />
           </div>
         </header>
 
         <div className="relative min-h-0 flex-1">
-          <div className="flex h-full flex-1 gap-4 overflow-x-auto px-4 pb-4 md:px-5">
+          <div className="flex h-full flex-1 gap-3 overflow-x-auto px-4 pb-4 md:px-5">
             {[...Array(4)].map((_, i) => (
               <div
                 key={`kanban-column-skeleton-${
