@@ -31,6 +31,7 @@ import { useDeleteTask } from "@/hooks/mutations/task/use-delete-task";
 import useActiveWorkspace from "@/hooks/queries/workspace/use-active-workspace";
 import { useGetActiveWorkspaceUsers } from "@/hooks/queries/workspace-users/use-get-active-workspace-users";
 import { cn } from "@/lib/cn";
+import { getColumnIcon } from "@/lib/column";
 import {
   dueDateStatusColors,
   getDueDateStatus,
@@ -184,8 +185,7 @@ function TaskRow({ task, projectSlug }: TaskRowProps) {
       className={cn(
         "border-b border-border/50 transition-colors duration-150",
         isDragging && "opacity-50",
-        isTaskSelected &&
-          "bg-accent/60 shadow-sm ring-1 ring-inset ring-ring/30",
+        isTaskSelected && "bg-sidebar/50",
         isTaskFocused && "ring-2 ring-inset ring-ring/50",
       )}
     >
@@ -196,26 +196,37 @@ function TaskRow({ task, projectSlug }: TaskRowProps) {
             onClick={handleClick}
             onKeyDown={handleKeyDown}
             className={cn(
-              "group relative flex items-center gap-3 px-4 py-1.5 transition-colors cursor-pointer",
-              isTaskSelected ? "bg-accent/45" : "hover:bg-accent/60",
+              "group relative flex h-11 cursor-pointer items-center gap-2 px-6 transition-colors",
+              isTaskSelected ? "bg-sidebar/50" : "hover:bg-sidebar/50",
             )}
             {...attributes}
             {...listeners}
           >
             {showPriority && (
-              <div className="flex-shrink-0 first:[&_svg]:h-4 first:[&_svg]:w-4">
+              <div className="shrink-0 first:[&_svg]:size-4">
                 {getPriorityIcon(task.priority ?? "")}
               </div>
             )}
             {showTaskNumbers && (
-              <div className="text-xs font-mono text-muted-foreground flex-shrink-0">
+              <div className="w-[66px] shrink-0 truncate text-sm font-medium text-muted-foreground">
                 {projectSlug}-{task.number}
               </div>
             )}
+            <div className="shrink-0 text-muted-foreground">
+              {getColumnIcon(
+                task.status,
+                project?.columns?.find(
+                  (c) => c.id === task.status || c.slug === task.status,
+                )?.isFinal,
+                project?.columns?.find(
+                  (c) => c.id === task.status || c.slug === task.status,
+                )?.icon,
+              )}
+            </div>
 
-            <div className="flex-1 min-w-0 flex items-center gap-2">
-              <div className="flex items-center gap-2 justify-between w-full">
-                <span className="text-sm text-foreground truncate">
+            <div className="flex min-w-0 flex-1 items-center gap-2">
+              <div className="flex w-full items-center justify-between gap-2">
+                <span className="truncate text-sm font-medium text-foreground">
                   {task.title}
                 </span>
                 <div className="flex items-center gap-1">
@@ -354,23 +365,21 @@ function TaskRow({ task, projectSlug }: TaskRowProps) {
             {showAssignees && (
               <div className="flex-shrink-0">
                 {task.userId ? (
-                  <Avatar className="h-6 w-6">
+                  <Avatar className="size-5">
                     <AvatarImage
                       src={assignee?.user?.image ?? ""}
                       alt={assignee?.user?.name || ""}
                     />
-                    <AvatarFallback className="text-xs font-medium border border-border/30">
+                    <AvatarFallback className="border border-border/30 text-[10px] font-medium">
                       {getInitials(assignee?.user?.name)}
                     </AvatarFallback>
                   </Avatar>
                 ) : (
                   <div
-                    className="w-6 h-6 rounded-full bg-muted border border-border flex items-center justify-center"
+                    className="flex size-5 items-center justify-center rounded-full border border-border/70 text-muted-foreground/70"
                     title={t("tasks:assignee.unassigned")}
                   >
-                    <span className="text-[10px] font-medium text-muted-foreground">
-                      ?
-                    </span>
+                    <span className="text-[10px] leading-none">○</span>
                   </div>
                 )}
               </div>

@@ -252,20 +252,20 @@ export default function BoardToolbar({
   };
 
   return (
-    <div className="border-border/80 border-b bg-card/80 backdrop-blur supports-[backdrop-filter]:bg-card/70">
-      <div className="flex min-h-10 items-center px-2 py-1.5 md:px-3">
+    <div className="border-b border-border bg-container">
+      <div className="flex h-10 items-center px-4 py-1.5 md:px-6">
         <div className="flex w-full flex-wrap items-center justify-between gap-2">
-          <div className="flex flex-wrap items-center gap-1.5">
+          <div className="flex flex-wrap items-center gap-1">
             <DropdownMenu>
               <DropdownMenuTrigger
                 render={
                   <button
                     type="button"
-                    className="inline-flex h-7 items-center gap-1.5 rounded-md border border-border bg-background px-2.5 text-foreground text-xs font-medium outline-none ring-0 hover:bg-accent/60"
+                    className="inline-flex h-7 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium text-muted-foreground outline-none ring-0 hover:bg-accent hover:text-foreground"
                   />
                 }
               >
-                <Filter className="h-3 w-3" />
+                <Filter className="h-3.5 w-3.5" />
                 {t("common:actions.filter")}
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="start">
@@ -646,26 +646,26 @@ export default function BoardToolbar({
           <div className="inline-flex items-center gap-1">
             <button
               type="button"
-              className={`inline-flex h-6 items-center gap-1 rounded-md px-2 text-xs font-medium transition-colors ${
+              className={`inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-xs font-medium transition-colors ${
                 viewMode === "board"
-                  ? "bg-accent text-foreground"
-                  : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
+                  ? "border-border bg-accent text-foreground"
+                  : "border-transparent text-muted-foreground hover:bg-accent/50 hover:text-foreground"
               }`}
               onClick={() => setViewMode("board")}
             >
-              <PanelsTopLeft className="h-3 w-3" />
+              <PanelsTopLeft className="h-3.5 w-3.5" />
               {t("tasks:view.board")}
             </button>
             <button
               type="button"
-              className={`inline-flex h-6 items-center gap-1 rounded-md px-2 text-xs font-medium transition-colors ${
+              className={`inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-xs font-medium transition-colors ${
                 viewMode === "list"
-                  ? "bg-accent text-foreground"
-                  : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
+                  ? "border-border bg-accent text-foreground"
+                  : "border-transparent text-muted-foreground hover:bg-accent/50 hover:text-foreground"
               }`}
               onClick={() => setViewMode("list")}
             >
-              <Rows3 className="h-3 w-3" />
+              <Rows3 className="h-3.5 w-3.5" />
               {t("tasks:view.list")}
             </button>
           </div>

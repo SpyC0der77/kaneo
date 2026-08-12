@@ -2,7 +2,7 @@ import type React from "react";
 import type { ReactNode } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { DemoAlert } from "@/components/demo-alert";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { isDemoMode } from "@/constants/urls";
 import { useUserPreferencesEffects } from "@/hooks/use-user-preferences-effects";
 import { cn } from "@/lib/cn";
@@ -27,7 +27,7 @@ function LayoutHeader({ children, className }: HeaderProps) {
   return (
     <header
       className={cn(
-        "flex h-10 shrink-0 gap-2 transition-[width,height] ease-in-out group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-8 border-b border-border bg-card p-2",
+        "flex h-10 shrink-0 items-center gap-3 border-b border-border bg-container px-4 py-1.5 transition-[width,height] ease-in-out md:px-6 group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-8",
         className,
       )}
     >
@@ -38,7 +38,7 @@ function LayoutHeader({ children, className }: HeaderProps) {
 
 function LayoutContent({ children, className }: ContentProps) {
   return (
-    <div className={cn("flex-1 min-h-0", className)}>
+    <div className={cn("min-h-0 flex-1", className)}>
       <div className="h-full">{children}</div>
     </div>
   );
@@ -50,26 +50,28 @@ function Layout({ children, className }: LayoutProps) {
   useUserPreferencesEffects();
 
   return (
-    <div className="flex w-full bg-background">
+    <div className="flex h-svh w-full overflow-hidden bg-background">
       <SidebarProvider
         defaultOpen={sidebarDefaultOpen}
         style={
           {
-            "--sidebar-width": "calc(var(--spacing) * 60)",
-            "--header-height": "calc(var(--spacing) * 12)",
+            "--sidebar-width": "244px",
+            "--header-height": "40px",
           } as React.CSSProperties
         }
       >
         <AppSidebar />
-        <SidebarInset
-          className={cn(
-            "m-2 flex flex-1 flex-col overflow-auto rounded-xl border border-border/80 bg-background shadow-sm/5",
-            className,
-          )}
-        >
-          {isDemoMode && <DemoAlert />}
-          {children}
-        </SidebarInset>
+        <div className="flex h-svh w-full min-w-0 flex-1 flex-col overflow-hidden md:p-2">
+          <div
+            className={cn(
+              "flex h-full w-full flex-col overflow-hidden bg-container md:rounded-md md:border md:border-border",
+              className,
+            )}
+          >
+            {isDemoMode && <DemoAlert />}
+            {children}
+          </div>
+        </div>
       </SidebarProvider>
     </div>
   );

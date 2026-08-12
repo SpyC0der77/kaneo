@@ -29,16 +29,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   });
 
   return (
-    <Sidebar
-      collapsible="offcanvas"
-      variant="inset"
-      className="border-none pt-1.5"
-      {...props}
-    >
-      <SidebarHeader className="pt-1 pb-1.5">
+    <Sidebar collapsible="offcanvas" {...props}>
+      <SidebarHeader>
         <WorkspaceSwitcher />
       </SidebarHeader>
-      <SidebarContent className="overflow-hidden gap-1 py-1">
+      <SidebarContent className="gap-1 overflow-hidden py-1">
         <Search />
         <NavMain />
         <NavProjects />

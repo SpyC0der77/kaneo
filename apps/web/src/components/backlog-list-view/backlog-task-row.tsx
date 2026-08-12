@@ -140,8 +140,7 @@ export default function BacklogTaskRow({ task }: BacklogTaskRowProps) {
       className={cn(
         "border-b border-border/50 transition-colors duration-150",
         isDragging && "opacity-50",
-        isTaskSelected &&
-          "bg-accent/60 shadow-sm ring-1 ring-inset ring-ring/30",
+        isTaskSelected && "bg-sidebar/50",
         isTaskFocused && "ring-2 ring-inset ring-ring/50",
       )}
     >
@@ -152,8 +151,8 @@ export default function BacklogTaskRow({ task }: BacklogTaskRowProps) {
             onClick={handleClick}
             onKeyDown={handleKeyDown}
             className={cn(
-              "group relative flex items-center gap-3 px-4 py-1.5 transition-colors cursor-pointer",
-              isTaskSelected ? "bg-accent/45" : "hover:bg-accent/60",
+              "group relative flex h-11 cursor-pointer items-center gap-2 px-6 transition-colors",
+              isTaskSelected ? "bg-sidebar/50" : "hover:bg-sidebar/50",
             )}
             {...attributes}
             {...listeners}
@@ -164,14 +163,14 @@ export default function BacklogTaskRow({ task }: BacklogTaskRowProps) {
               </div>
             )}
             {showTaskNumbers && (
-              <div className="text-xs font-mono text-muted-foreground flex-shrink-0">
+              <div className="w-[66px] shrink-0 truncate text-sm font-medium text-muted-foreground">
                 {project?.slug}-{task.number}
               </div>
             )}
 
             <div className="flex-1 min-w-0 flex items-center gap-2">
               <div className="flex items-center gap-2 justify-between w-full">
-                <span className="text-sm text-foreground truncate">
+                <span className="truncate text-sm font-semibold text-foreground">
                   {task.title}
                 </span>
                 {showLabels && (

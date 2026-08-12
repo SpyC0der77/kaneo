@@ -6,7 +6,6 @@ import ProjectCrumbSelect from "@/components/common/header/project-crumb-select"
 import WorkspaceCrumbSelect from "@/components/common/header/workspace-crumb-select";
 import Layout from "@/components/common/layout";
 import CreateProjectModal from "@/components/shared/modals/create-project-modal";
-import { Button } from "@/components/ui/button";
 import { KbdSequence } from "@/components/ui/kbd";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
@@ -91,13 +90,13 @@ export default function ProjectLayout({
 
   return (
     <Layout>
-      <Layout.Header className="h-11 border-border/80 px-2">
-        <div className="flex w-full items-center justify-between gap-2">
-          <div className="flex min-w-0 items-center gap-2">
+      <Layout.Header>
+        <div className="flex w-full items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-3">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <SidebarTrigger className="-ml-1 h-7 w-7 cursor-pointer text-foreground/85 hover:text-foreground" />
+                  <SidebarTrigger className="-ml-1 size-8 cursor-pointer text-muted-foreground hover:text-foreground" />
                 </TooltipTrigger>
                 <TooltipContent>
                   <p className="flex items-center gap-2 text-[10px]">
@@ -113,11 +112,9 @@ export default function ProjectLayout({
               </Tooltip>
             </TooltipProvider>
 
-            <div className="h-4 w-px shrink-0 bg-border/80" />
-
-            <div className="hidden min-w-0 items-center gap-1 md:flex">
+            <div className="hidden min-w-0 items-center gap-1.5 md:flex">
               <WorkspaceCrumbSelect />
-              <span className="text-foreground/30 text-xs">/</span>
+              <span className="text-muted-foreground/50 text-xs">/</span>
               <ProjectCrumbSelect
                 workspaceId={workspaceId}
                 projectId={projectId}
@@ -141,43 +138,46 @@ export default function ProjectLayout({
             </div>
 
             {showViewSwitcher && (
-              <div className="hidden h-8 items-center gap-0.5 rounded-lg border border-border/80 bg-background p-0.5 sm:inline-flex">
-                <Button
-                  variant={resolvedView === "backlog" ? "secondary" : "ghost"}
-                  size="xs"
+              <div className="hidden items-center gap-1 sm:flex">
+                <button
+                  type="button"
                   onClick={handleNavigateToBacklog}
                   className={cn(
-                    "h-6 gap-1.5 rounded-md px-2 text-xs",
-                    resolvedView !== "backlog" && "text-muted-foreground",
+                    "inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-xs font-medium transition-colors",
+                    resolvedView === "backlog"
+                      ? "border-border bg-accent text-foreground"
+                      : "border-transparent text-muted-foreground hover:bg-accent/50 hover:text-foreground",
                   )}
                 >
                   <SquircleDashed className="size-3.5" />
                   Backlog
-                </Button>
-                <Button
-                  variant={resolvedView === "board" ? "secondary" : "ghost"}
-                  size="xs"
+                </button>
+                <button
+                  type="button"
                   onClick={handleNavigateToBoard}
                   className={cn(
-                    "h-6 gap-1.5 rounded-md px-2 text-xs",
-                    resolvedView !== "board" && "text-muted-foreground",
+                    "inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-xs font-medium transition-colors",
+                    resolvedView === "board"
+                      ? "border-border bg-accent text-foreground"
+                      : "border-transparent text-muted-foreground hover:bg-accent/50 hover:text-foreground",
                   )}
                 >
                   <SquareKanban className="size-3.5" />
                   Tasks
-                </Button>
-                <Button
-                  variant={resolvedView === "gantt" ? "secondary" : "ghost"}
-                  size="xs"
+                </button>
+                <button
+                  type="button"
                   onClick={handleNavigateToGantt}
                   className={cn(
-                    "h-6 gap-1.5 rounded-md px-2 text-xs",
-                    resolvedView !== "gantt" && "text-muted-foreground",
+                    "inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-xs font-medium transition-colors",
+                    resolvedView === "gantt"
+                      ? "border-border bg-accent text-foreground"
+                      : "border-transparent text-muted-foreground hover:bg-accent/50 hover:text-foreground",
                   )}
                 >
                   <CalendarDays className="size-3.5" />
                   Gantt
-                </Button>
+                </button>
               </div>
             )}
           </div>

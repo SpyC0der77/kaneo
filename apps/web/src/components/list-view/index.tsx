@@ -28,7 +28,7 @@ import { priorityColorsTaskCard } from "@/constants/priority-colors";
 import { useUpdateTask } from "@/hooks/mutations/task/use-update-task";
 import { useRegisterShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { cn } from "@/lib/cn";
-import { getColumnIcon } from "@/lib/column";
+import { getColumnAccentColor, getColumnIcon } from "@/lib/column";
 import { toast } from "@/lib/toast";
 import useBulkSelectionStore from "@/store/bulk-selection";
 import useProjectStore from "@/store/project";
@@ -298,26 +298,29 @@ function ListView({ project, disableDragDrop = false }: ListViewProps) {
           showDropIndicator && "border-l-4 border-l-ring bg-accent/35",
         )}
       >
-        <div className="flex items-center justify-between py-2 px-4 bg-muted/60 border-b border-border/50">
+        <div
+          className="sticky top-0 z-10 flex h-10 items-center justify-between px-6"
+          style={{
+            backgroundColor: `${getColumnAccentColor(column.slug ?? column.id, column.color, column.isFinal)}14`,
+          }}
+        >
           <button
             type="button"
             onClick={() => toggleSection(column.id)}
-            className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-foreground transition-colors"
+            className="flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-foreground"
           >
             <ChevronRight
               className={cn(
-                "w-3 h-3 transition-transform",
+                "size-3 text-muted-foreground transition-transform",
                 expandedSections[column.id] && "rotate-90",
               )}
             />
-            <div className="flex items-center gap-2 h-4">
+            <div className="flex h-4 items-center gap-2">
               {getColumnIcon(column.id, column.isFinal, column.icon)}
-              <div className="flex items-center gap-1">
-                <span className="mt-1 mr-1">{column.name}</span>
-                <span className="text-xs text-muted-foreground mt-0.5">
-                  {column.tasks.length}
-                </span>
-              </div>
+              <span>{column.name}</span>
+              <span className="text-sm text-muted-foreground">
+                {column.tasks.length}
+              </span>
             </div>
           </button>
 
@@ -401,7 +404,7 @@ function ListView({ project, disableDragDrop = false }: ListViewProps) {
       onDragEnd={handleDragEnd}
       modifiers={[snapCenterToCursor]}
     >
-      <div className="w-full h-full overflow-auto bg-muted/20">
+      <div className="h-full w-full overflow-auto bg-container">
         <div className="divide-y divide-border/50">
           {project.columns.map((column) => (
             <ColumnSection key={column.id} column={column} />

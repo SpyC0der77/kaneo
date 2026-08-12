@@ -184,38 +184,38 @@ function KanbanBoard({ project, disableDragDrop = false }: KanbanBoardProps) {
     setActiveId(null);
   };
 
-  if (!project || !project?.columns) {
+  if (!project?.columns) {
     return (
-      <div className="flex h-full w-full flex-col bg-linear-to-b from-muted/25 to-background">
-        <header className="mb-6 mt-6 space-y-6 shrink-0 px-6">
+      <div className="flex h-full w-full flex-col bg-container">
+        <header className="mb-6 mt-6 shrink-0 space-y-6 px-6">
           <div className="flex items-center justify-between">
-            <div className="w-48 h-8 bg-muted/50 rounded-md animate-pulse" />
+            <div className="h-8 w-48 animate-pulse rounded-md bg-muted/50" />
           </div>
         </header>
 
         <div className="relative min-h-0 flex-1">
-          <div className="flex h-full flex-1 gap-4 overflow-x-auto px-4 pb-4 md:px-5">
+          <div className="flex h-full flex-1 gap-3 overflow-x-auto px-4 pb-4 md:px-5">
             {[...Array(4)].map((_, i) => (
               <div
                 key={`kanban-column-skeleton-${
                   // biome-ignore lint/suspicious/noArrayIndexKey: It's a skeleton
                   i
                 }`}
-                className="h-full min-w-80 w-full flex-1 rounded-xl border border-border/70 bg-card"
+                className="h-full w-[348px] min-w-[348px] max-w-[348px] shrink-0 rounded-md bg-container"
               >
-                <div className="px-4 py-3 flex items-center justify-between">
-                  <div className="w-24 h-5 bg-muted/50 rounded animate-pulse" />
-                  <div className="w-8 h-5 bg-muted/50 rounded animate-pulse" />
+                <div className="flex h-[50px] items-center justify-between px-3">
+                  <div className="h-5 w-24 animate-pulse rounded bg-muted/50" />
+                  <div className="h-5 w-8 animate-pulse rounded bg-muted/50" />
                 </div>
 
-                <div className="px-2 pb-4 flex flex-col gap-3 flex-1">
+                <div className="flex flex-1 flex-col gap-2 px-2 pb-4">
                   {[...Array(3)].map((_, j) => (
                     <div
                       key={`kanban-task-skeleton-${
                         // biome-ignore lint/suspicious/noArrayIndexKey: It's a skeleton
                         j
                       }`}
-                      className="p-4 bg-card rounded-lg border border-border/50 animate-pulse"
+                      className="animate-pulse rounded-md border border-border/50 bg-background p-3"
                     >
                       <div className="space-y-3">
                         <div className="w-2/3 h-4 bg-muted/70 rounded" />
@@ -245,13 +245,13 @@ function KanbanBoard({ project, disableDragDrop = false }: KanbanBoardProps) {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="flex h-full w-full flex-col bg-linear-to-b from-muted/20 to-background">
+      <div className="flex h-full w-full flex-col bg-container">
         <div className="min-h-0 flex-1 overflow-x-auto [-webkit-overflow-scrolling:touch]">
-          <div className="flex h-full min-w-max gap-4 px-4 py-4 md:px-5">
+          <div className="flex h-full min-w-max gap-3 px-4 py-3 md:px-5">
             {project.columns?.map((column) => (
               <div
                 key={column.id}
-                className="h-full max-w-96 min-w-80 shrink-0 flex-1"
+                className="h-full w-[348px] max-w-[348px] min-w-[348px] shrink-0"
               >
                 <Column column={column} disableDragDrop={disableDragDrop} />
               </div>
@@ -261,10 +261,8 @@ function KanbanBoard({ project, disableDragDrop = false }: KanbanBoardProps) {
       </div>
       <DragOverlay dropAnimation={dropAnimation}>
         {activeTask ? (
-          <div className="transform rotate-1 scale-[1.03] shadow-lg">
-            <div className="ring-2 ring-ring/35 rounded-lg">
-              <TaskCard task={activeTask} />
-            </div>
+          <div className="w-[348px] shadow-md">
+            <TaskCard task={activeTask} />
           </div>
         ) : null}
       </DragOverlay>
