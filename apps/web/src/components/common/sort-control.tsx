@@ -67,10 +67,10 @@ export default function SortControl({ sort, onSortChange }: SortControlProps) {
           render={
             <button
               type="button"
-              className={`inline-flex h-7 items-center gap-1.5 rounded-md border px-2.5 text-xs font-medium outline-none ring-0 ${
+              className={`inline-flex h-7 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium outline-none ring-0 ${
                 isActive
-                  ? "border-primary/30 bg-primary/10 text-primary hover:bg-primary/15"
-                  : "border-border bg-background text-foreground hover:bg-accent/60"
+                  ? "bg-accent text-foreground hover:bg-accent/80"
+                  : "text-muted-foreground hover:bg-accent hover:text-foreground"
               }`}
             />
           }
@@ -131,7 +131,7 @@ export default function SortControl({ sort, onSortChange }: SortControlProps) {
         <button
           type="button"
           onClick={toggleDirection}
-          className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-background text-foreground hover:bg-accent/60"
+          className="inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground"
           title={
             sort.direction === "asc"
               ? t("tasks:sort.ascending")

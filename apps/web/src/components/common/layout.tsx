@@ -27,7 +27,7 @@ function LayoutHeader({ children, className }: HeaderProps) {
   return (
     <header
       className={cn(
-        "flex h-10 shrink-0 items-center gap-2 border-b border-border bg-container px-3 transition-[width,height] ease-in-out group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-8",
+        "flex h-10 shrink-0 items-center gap-3 border-b border-border bg-container px-4 py-1.5 transition-[width,height] ease-in-out md:px-6 group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-8",
         className,
       )}
     >
@@ -55,8 +55,8 @@ function Layout({ children, className }: LayoutProps) {
         defaultOpen={sidebarDefaultOpen}
         style={
           {
-            "--sidebar-width": "calc(var(--spacing) * 60)",
-            "--header-height": "calc(var(--spacing) * 12)",
+            "--sidebar-width": "244px",
+            "--header-height": "40px",
           } as React.CSSProperties
         }
       >

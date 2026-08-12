@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import type Task from "@/types/task";
 
 const labelColors = [
@@ -42,19 +41,18 @@ export function TaskLabels({
   return (
     <div className="flex flex-wrap gap-1">
       {labels.map((label: { id: string; name: string; color: string }) => (
-        <Badge
+        <span
           key={label.id}
-          variant="outline"
-          className="px-2 py-0.5 text-[10px] flex items-center"
+          className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-background px-1.5 py-0.5 text-[11px] text-muted-foreground"
         >
           <span
-            className="inline-block w-1.5 h-1.5 mr-1 rounded-full"
+            className="size-1.5 shrink-0 rounded-full"
             style={{
               backgroundColor: validColor(label.color),
             }}
           />
-          <span className="max-w-20 truncate">{label.name}</span>
-        </Badge>
+          <span className="max-w-24 truncate">{label.name}</span>
+        </span>
       ))}
     </div>
   );

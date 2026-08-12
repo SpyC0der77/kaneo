@@ -318,7 +318,7 @@ function BacklogListView({
           showDropIndicator && "border-l-4 border-l-ring bg-accent/35",
         )}
       >
-        <div className="sticky top-0 z-10 flex h-10 items-center justify-between border-b border-border/50 bg-container px-6">
+        <div className="sticky top-0 z-10 flex h-10 items-center justify-between bg-muted/40 px-6">
           <button
             type="button"
             onClick={() => toggleSection(sectionId)}

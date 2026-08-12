@@ -385,12 +385,10 @@ function TaskCard({ task, disableDragDrop = false }: TaskCardProps) {
                   </Avatar>
                 ) : (
                   <div
-                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-border bg-muted"
+                    className="flex size-5 shrink-0 items-center justify-center rounded-full border border-border/70 text-muted-foreground/70"
                     title={t("tasks:assignee.unassigned")}
                   >
-                    <span className="text-[10px] font-medium text-muted-foreground">
-                      ?
-                    </span>
+                    <span className="text-[10px] leading-none">○</span>
                   </div>
                 ))}
             </div>
